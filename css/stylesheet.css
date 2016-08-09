@@ -1,0 +1,86 @@
+body{
+	background-image: url("../images/coffeeLeather.jpg");
+	background-repeat: repeat-y;
+	background-size: contain;
+	color: #f7b44b;
+	font-weight: 600;
+	font-family: 'Indie Flower', cursive;
+}
+.glass{
+/* background styles */
+position: relative;
+display: inline-block;
+background: #f7b44b; /*for compatibility with older browsers*/
+background-image: linear-gradient(#fec866,#f89f2b);
+border-radius: 3px;
+border: none;
+box-shadow: 0px 1px 4px -2px #333;
+font-size: 16px;
+letter-spacing: 3px;
+/*text-shadow: 0px -1px #333;*/
+
+/* text styles */
+text-decoration: none;
+color: #402822;
+}
+.glass:after{
+content: '';
+position: absolute;
+top: 2px;
+left: 2px;
+width: calc(100% - 4px);
+height: 50%;
+background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.2));
+}
+.glass:active, .glass:target{
+background: linear-gradient(#c44500,#b02b00);
+}
+.glass:hover{
+background:linear-gradient(#cd804c,#db5c00);
+}
+.shadow, .shadow:active, .shadow:hover, .shadow:focus{
+box-shadow: inset -3px -2px 9px -1px #100903, 0px 2px 5px 1px #140907;
+-webkit-box-shadow: inset -3px -2px 9px -1px #100903, 0px 2px 5px 1px #140907;
+-moz-box-shadow: inset -3px -2px 9px -1px #100903, 0px 2px 5px 1px #140907;
+-o-box-shadow: inset -3px -2px 9px -1px #100903, 0px 2px 5px 1px #140907;
+  padding: 15px;
+  background-color: #442b24;
+  border: 1px #000 solid;
+  border-radius: 3px;
+  color: white;
+  font-size: 18px;
+  text-shadow: 1px 1px 2px rgba(56, 36, 29, 0.7);
+  -webkit-text-shadow: 1px 1px 2px rgba(56, 36, 29, 0.7);
+  -moz-text-shadow: 1px 1px 2px rgba(56, 36, 29, 0.7);
+  -o-text-shadow: 1px 1px 2px rgba(56, 36, 29, 0.7);
+}
+.container {
+    padding-right: 112px;
+    padding-left: 112px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+.control-label{
+	font-size: 18px;
+}
+.bookPic img{min-width: 100%; border: 1px solid #f7b44b;}
+h1,h2,h3{
+	text-align: center;
+}
+.error-text{color:red; margin-top: 30px;}
+/* MEDIA QUERIES -------------------------------------- */
+/* Extra Small Devices (phones, 320px and up)*/
+@media (min-width: 320px) {
+	.bookPic {height: 235px; overflow: hidden; margin-bottom: 20px;}
+	.glass {font-size: 14px; letter-spacing: 1px;}
+}
+/* Small Devices (tablets , 786 px and up)*/
+@media (min-width: 786px) {
+	.bookPic {height: 330px;}
+}
+
+/* Medium Devices (laptops and desktops , 992 px and up)*/
+@media (min-width: 992px) {
+	.bookPic {height: 250px; overflow: hidden; margin-bottom: 40px;}
+}
