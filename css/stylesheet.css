@@ -1,10 +1,10 @@
 body{
-	background-image: url("../images/coffeeLeather.jpg");
-	background-repeat: repeat-y;
-	background-size: contain;
-	color: #f7b44b;
-	font-weight: 600;
-	font-family: 'Indie Flower', cursive;
+  background-image: url("../images/coffeeLeather.jpg");
+  background-repeat: repeat-y;
+  background-size: contain;
+  color: #f7b44b;
+  font-weight: 600;
+  font-family: 'Indie Flower', cursive;
 }
 .glass{
 /* background styles */
@@ -62,25 +62,42 @@ box-shadow: inset -3px -2px 9px -1px #100903, 0px 2px 5px 1px #140907;
     text-align: center;
 }
 .control-label{
-	font-size: 18px;
+  font-size: 18px;
 }
 .bookPic img{min-width: 100%; border: 1px solid #f7b44b;}
 h1,h2,h3{
-	text-align: center;
+  text-align: center;
 }
 .error-text{color:red; margin-top: 30px;}
 /* MEDIA QUERIES -------------------------------------- */
 /* Extra Small Devices (phones, 320px and up)*/
 @media (min-width: 320px) {
-	.bookPic {height: 235px; overflow: hidden; margin-bottom: 20px;}
-	.glass {font-size: 14px; letter-spacing: 1px;}
+  .bookPic {height: 235px; overflow: hidden; margin-bottom: 20px;}
+  .glass {font-size: 14px; letter-spacing: 1px;}
 }
 /* Small Devices (tablets , 786 px and up)*/
 @media (min-width: 786px) {
-	.bookPic {height: 330px;}
+  .bookPic {height: 330px;}
 }
 
 /* Medium Devices (laptops and desktops , 992 px and up)*/
 @media (min-width: 992px) {
-	.bookPic {height: 250px; overflow: hidden; margin-bottom: 40px;}
+  .bookPic {height: 250px; overflow: hidden; margin-bottom: 40px;}
+}
+
+div #pagination li {
+  display:inline;
+  margin-right:20px;
+  font-size:18px;
+  cursor: pointer;
+  text-align: center;
+}
+.number{
+  margin-top: 0 auto;
+  text-align: center;
+  width: 100%;
+}
+p{
+  color:white;
+  font-size: 14px;
 }

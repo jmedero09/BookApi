@@ -1,92 +1,148 @@
+var index = 0;
 
-// AIzaSyDv65pOGkf1np9V5
-function getRequest(search,callback) {
+var indexValue = 0;
 
-		var params = {
-			//part:'snippet',
-			key:"AIzaSyDv65pOGkf1np9V56hTMDV_Iy1ukR3gXj4",
+var tempSearch = '';
 
-			q:search,
+var bookResults = "";
 
-			maxResults:40,
+function getRequest(search, callback) {
 
-			orderBy:"relevance"
-		};
-		$.ajax({
-			
-			url: "https://www.googleapis.com/books/v1/volumes",
+	var params = {
+		//part:'snippet',
+		key: "AIzaSyDv65pOGkf1np9V56hTMDV_Iy1ukR3gXj4",
 
-			data: params,	
+		q: search,
 
-			dataType: "jsonp",//use jsonp to avoid cross origin issues
+		startIndex: index,
 
-			type: "GET"
-		})
-		.done(function(result){ //this waits for the ajax to return with a succesful promise 
+		maxResults: 18,
+
+		orderBy: "relevance",
+
+		printType: 'books',
+
+		intitle: search
+
+	};
+	$.ajax({
+
+		url: "https://www.googleapis.com/books/v1/volumes",
+
+		data: params,
+
+		dataType: "json	", //use jsonp to avoid cross origin issues
+
+		type: "GET"
+	})
+	.done(function(result) { //this waits for the ajax to return with a succesful promise 	
+
+		for (var i = 1; i < Math.floor(result.totalItems / 18); i++) {
+
+			// make sure this only gets appended once 
+			if(i<=10){
 				
-			$('.error-text').html(result.items.length +" results for "+params.q);
-			
-			$.each(result.items, function(key,value) {
+				$('#pagination').append('<li value="' + indexValue + '">' + i + '</li>');
 
-				$('.book-results').append('<div class=" col-xs-6 col-sm-4 col-md-2 col-lg-2 bookPic"><img class="img-responsive" src= "'+value.volumeInfo.imageLinks.thumbnail+'"><p>'+value.volumeInfo.title+'</p></div>')
-			});				
-				callback(result.items);
+				indexValue = indexValue + 18;
 
+				//console.log(indexValue);
+			}
+		}
+		indexValue=0;
+
+
+		$('.error-text').html(result.items.length + " results for " + params.q);
+
+		$.each(result.items, function(key, value) {
+
+			$('.book-results').append('<div class=" col-xs-6 col-sm-4 col-md-2 col-lg-2 bookPic"><img class="img-responsive" src= "' + value.volumeInfo.imageLinks.thumbnail + '"><p>' + value.volumeInfo.title + '</p></div>')
 		});
 
-}	
+		callback(result.items);
 
-function pagesPerDay(pageAmount,days){
-	
-	return pageAmount/days;
+	});
 
 }
-function show(img,title,howManyDays,dailyReadings){
-	return '<div class=" col-xs-6 col-sm-4 col-md-offset-3 col-md-2 col-lg-2 bookPic"><img class="img-responsive" src= "'+picture+'"></div><div col-md-1><h3>'+title+'</h3>'+'<h3>Days You want to finish book:'+howManyDays+'</h3><h3>Pages to read a day '+dailyPageReading+'</h3></div>'
-}
-$(document).ready(function(){
-	
-	var bookResults = "";
 
-	$('button').click(function(e){
-		
+function pagesPerDay(pageAmount, days) {
+
+	return pageAmount / days;
+
+}
+
+$(document).ready(function() {
+
+	$('button').click(function(e) {
+
 		e.preventDefault();
 
 		$('.book-results').empty();
 
+		$('.display-book-info').empty();
+
 		var search = $("#book_search").val();
 
-		getRequest(search,function(data){
+		tempSearch = $("#book_search").val();
+
+		getRequest(search, function(data) {
 
 			bookResults = data
-
 
 		});
 
 	});
 
-	$('.book-results').on('click','.bookPic','img',function(){
-				
-		for(var i =0;i<bookResults.length;i++){
+	$('.book-results').on('click', '.bookPic', 'img', function() {
 
-			if($(this).text()===bookResults[i].volumeInfo.title){
+		for (var i = 0; i < bookResults.length; i++) {
+
+			if ($(this).text() === bookResults[i].volumeInfo.title) {
 
 				var bookPages = bookResults[i].volumeInfo.pageCount;
+
 				var picture = bookResults[i].volumeInfo.imageLinks.thumbnail;
-				var title =  bookResults[i].volumeInfo.title
+
+				var title = bookResults[i].volumeInfo.title
 
 			}
-}
-		var howManyDays =  prompt('In how many days would you like to finish your book');
-		var dailyPageReading = Math.round(pagesPerDay(bookPages,howManyDays));
+		}
+		var howManyDays = prompt('In how many days would you like to finish your book');
+
+		if(howManyDays === ""|| howManyDays===null||howManyDays === 0){
+
+			howManyDays = prompt('In how many days would you like to finish your book');
+		}
+		else{
+			var dailyPageReading = Math.round(pagesPerDay(bookPages, howManyDays));
+
+			$('.book-results').empty();
+
+			$('.display-book-info').append('<div class=" col-xs-6 col-sm-4 col-md-offset-3 col-md-6 col-lg-2 bookPic"><img class="img-responsive" src= "' + picture + '"></div><div><h2>' + title + '</h2>' + '<p>Days You want to finish book: ' + howManyDays + '</p>' + '<p>Pages in book: ' + bookPages + '</p><p>Pages to read a day: ' + dailyPageReading + '</p></div>');
+
+			$('#pagination').empty();			
+		}
+
+
+	});
+	//page link number section 
+	$('#pagination').on('click', 'li', function() {
+
 		$('.book-results').empty();
-		$('.book-results').append('<div class=" col-xs-6 col-sm-4 col-md-offset-3 col-md-6 col-lg-2 bookPic"><img class="img-responsive" src= "'+picture+'"></div><div><h3>'+title+'</h3>'+'<h3>Days You want to finish book: '+howManyDays+'</h3>'+'<h3>Pages in book: '+ bookPages+'</h3><h3>Pages to read a day: '+dailyPageReading+'</h3></div>')
+
+		index = $(this).val(); //index + 18;//
+
+		console.log(index);
+
+		$('#pagination').empty();			
 
 
-		
-	});		
+		getRequest(tempSearch, function(data) {
 
+		bookResults = data
+
+		});
+
+	});
 
 });
-
-
